@@ -1,0 +1,6 @@
+InputData/
+OutputData/
+*.o
+*.gch
+run
+output.txt
