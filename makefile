@@ -18,7 +18,7 @@ main.o: main.cpp
 	g++ -c -O1 main.cpp -std=c++11
 
 run: Tree.o RandomForest.o Node.o LoadData.o main.o
-	g++ -o run -O1 Tree.o RandomForest.o Node.o LoadData.o main.o -larmadillo -fopenmp -std=c++11
+	g++ -o run.out -O1 Tree.o RandomForest.o Node.o LoadData.o main.o -larmadillo -fopenmp -std=c++11
 
 clean:
 	rm *.gch *.o run
