@@ -27,6 +27,10 @@
 #define testExampleNum 3
 #define splitPointsNum 4 // number of split points in each try of feautures.
 
+#define cropingHeigh 90
+#define cropingWidth 60
+#define outOFBound 100000
+
 #define INF 2e9
 
 using namespace std;
