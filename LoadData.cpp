@@ -3,11 +3,11 @@
 // We will use a .py script to convert the '.skdepth.cropping' and '.shand' files
 // to a single .csv file, where each line of the .csv contains the 90*60 depth
 // values and the 20*3 joints 3D position.
- 
+
 #include "LoadData.h"
 
 // Maximum buffer length of reading one line from file.
-#define maxLenOneLine 100000 
+#define maxLenOneLine 100000
 
 LoadData::LoadData() {}
 
@@ -37,35 +37,60 @@ LoadData::LoadData(string fileName, string dataSet) {
 	fin.close();
     cout << "Load file successfully from directory: " << (INPUTDIR + fileName).c_str() << endl;
 }
+
 LoadData::LoadData(vector<example> examples) {
-	data = examples;
+    data = examples;
 }
-/*TODO: please implement this*/
+
 void LoadData::convertRawDataToExamples() {
-    // Not correct.
-    // here we just use the raw data from file directly.
+    //assume u equals(1000,0)    v equals(0,1000)
+
     for (int i = 0; i < rawData.size(); i++) {
         example t;
         for (int j = 0; j < feaNum; j++) {
-            t.x[j] = rawData[i].terms[j];
+            //current pixel depth
+            float depth=rawData[i].terms[j];
+            //pixel position
+            int x = j / cropingWidth;
+            int y = j % cropingWidth;
+            //add_u position
+            int y_u=y+1000/depth;
+            //add_v position
+            int x_v=x-1000/depth;
+            //depth difference
+            if(y_u<cropingWidth&&x_v>=0)
+            {
+                t.x[j]= rawData[i].terms[x*cropingWidth+y_u]-rawData[i].terms[x_v*cropingWidth+y];
+                cout<<t.x[j]<<endl;
+            }
+            //out of bound , during training we don't use this feature if any picture is out of bound case.
+            else
+            {
+                t.x[j]=0;
+            }
         }
+
         for (int j = 0; j < labelNum; j++) {
             t.y[j] = rawData[i].terms[j + feaNum];
         }
         data.push_back(t);
-    }    
+    }
 }
+
 // Split the input train data into training data and test data.
 void LoadData::splitData(float rate) { // float num in range of [0,1]
-	if (rate < 0 || rate > 1) return;
-	int size = data.size();
-	int size1 = size * rate;
-	int i;
-	for (i = 0; i < size1; i++) trainData.push_back(data[i]);
-	for (; i < size; i++) testData.push_back(data[i]);
+    if (rate < 0 || rate > 1) return;
+    int size = data.size();
+    int size1 = size * rate;
+    int i;
+    for (i = 0; i < size1; i++) trainData.push_back(data[i]);
+    for (; i < size; i++) testData.push_back(data[i]);
 }
 
 vector<rawDataEachLine> LoadData::getRawData() { return rawData; }
+
 vector<example> LoadData::getData() { return data; }
+
 vector<example> LoadData::getTrainData() { return trainData; }
+
 vector<example> LoadData::getTestData() { return testData; }
