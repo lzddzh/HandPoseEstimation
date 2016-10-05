@@ -22,18 +22,18 @@ LoadData::LoadData(string fileName, string dataSet) {
     char buffer[maxLenOneLine];
     float t;
     rawDataEachLine E;
-    fin.open((INPUTDIR + fileName).c_str(), ifstream::in);
+    fin.open(("/Users/mac/Documents/HandPoseEstimation/InputData/" + fileName).c_str(), ifstream::in);
+    if (fin.is_open())
+        cout << INPUTDIR + fileName << endl;
     fin.getline(buffer, maxLenOneLine);
     for (int i = 0; i < (dataSet == "test" ? testExampleNum : trainExampleNum); i++) {
         int j = 0, pos = 0;
         fin.getline(buffer, maxLenOneLine);
         sscanf(buffer, " %f", &t);
-        while (buffer[pos++] != ',') {}
         for (j = 0; j < (dataSet == "test" ? feaNum : feaNum + labelNum); j++) {
+            while (pos < maxLenOneLine && buffer[pos++] != ',') {}
             sscanf(buffer + pos, " %f", &E.terms[j]);
-            while (buffer[pos++] != ',') {}
         }
-        sscanf(buffer + pos, " %f", &E.terms[j]);
         rawData.push_back(E);
     }
     fin.close();
@@ -45,7 +45,7 @@ LoadData::LoadData(vector<example> examples) {
 }
 
 void LoadData::convertRawDataToExamples() {
-    //assume u equals(200,0)    v equals(0,200)
+    //assume u equals(1000,0)    v equals(0,1000)
 
     for (int i = 0; i < rawData.size(); i++) {
         example t;
@@ -56,18 +56,19 @@ void LoadData::convertRawDataToExamples() {
             int x = j / cropingWidth;
             int y = j % cropingWidth;
             //add_u position
-            int y_u=y+200/depth;
+            int y_u=y+1000/depth;
             //add_v position
-            int x_v=x-200/depth;
+            int x_v=x-1000/depth;
             //depth difference
             if(y_u<cropingWidth&&x_v>=0)
             {
                 t.x[j]= rawData[i].terms[x*cropingWidth+y_u]-rawData[i].terms[x_v*cropingWidth+y];
+                cout<<t.x[j]<<endl;
             }
             //out of bound , during training we don't use this feature if any picture is out of bound case.
             else
             {
-                t.x[j]=outOFBound;
+                t.x[j]=0;
             }
         }
 
