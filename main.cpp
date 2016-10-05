@@ -24,7 +24,7 @@ int main() {
     // Just for shorter variable names.
 	float &a = minExampleSetSize , &b = treeDepth, &c = infoGain;
     // Number of trees in the forest. For convenience of debugging, just 3 here.
-	int treeNum = 100;
+	int treeNum = 2;
     // Ask user which mode to use.
     // If answer 'r', we will enter real run-time mode, program will 
     //     train on training data set and test on test data set.
@@ -43,7 +43,7 @@ int main() {
 	if (input == "d" || input == "D") {
 		cout << "\nBegin debug mode..." << endl;
         // Load data from training data set and split it to two parts.
-	    LoadData trainData("trainExample1.csv", "train");
+	    LoadData trainData("trainData.csv", "train");
         trainData.convertRawDataToExamples();
         // Take 70% of the data as training data, 30% as the test data.
 	    trainData.splitData(0.7);

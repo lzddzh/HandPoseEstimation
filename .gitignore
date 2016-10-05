@@ -1,6 +1,8 @@
 InputData/
 OutputData/
+pyscript/
 *.o
 *.gch
-run
-output.txt
+run.out
+output*.txt
+run.sh

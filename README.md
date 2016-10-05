@@ -127,6 +127,18 @@ This is just a prototype, below are a list that the way I used is not same with 
     of labels in the leaf. 
 4. For randomly select features at a node, I randomly select sqrt(features.size()).
 
+### About CS5340
+This Hand Pose Estimation is a course project of NUS School of Computing CS5340 
+[Uncertainty modelling in AI](http://web.bii.a-star.edu.sg/~chengli/courses/CS5340-F16/) Fall 2016.
+
+**Useful books:**
+* **Probabilistic Graphical Models : Principles and Techniques**  Daphne Koller and Nir Friedman
+* **An Introduction to Probabilistic Graphical Models** M. Jordan
+* [Deep Learning Online Book](http://www.deeplearningbook.org/)
+
+* [Graphical models, exponential families, and variational inference](http://www.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf)
+* [Probabilistic Reasoning in Intelligent Systems: Networks of Plausible Inference](http://www.amazon.com/Probabilistic-Reasoning-Intelligent-Systems-Plausible/dp/1558604790)
+
 ### Team member
 * Liu Zhendong - Tony
 * Yang Xuan - Yancy

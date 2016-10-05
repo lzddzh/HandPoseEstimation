@@ -17,13 +17,13 @@
 #define NUMTHREADS 4
 
 // Define the file read and write directory.
-#define INPUTDIR "ExampleInput/" // You can change this value to 'InputData/'
+#define INPUTDIR "InputData/" // You can change this value to 'InputData/'
 #define OUTPUTDIR "OutputData/"
 
 // Define the parameters of the input data.
-#define feaNum 10//90*60 // The number of feature in each example.
-#define labelNum 5 // 20*3, 20 3D positions of the joints.
-#define trainExampleNum 100 // For conveinience of dubugging, we first use only 10 examples.
+#define feaNum 90*60 // The number of feature in each example.
+#define labelNum 20*3 // 20 3D positions of the joints.
+#define trainExampleNum 10 // For conveinience of dubugging, we first use only 10 examples.
 #define testExampleNum 3
 #define splitPointsNum 4 // number of split points in each try of feautures.
 

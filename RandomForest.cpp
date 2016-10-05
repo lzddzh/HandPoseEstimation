@@ -8,27 +8,35 @@ void RandomForest::run(float a, float b, float c, int num) {
     int startT;
     // Now it use only 1 thread whatever you set. 
     // Later when the data becomes big, we debug this.
-    #pragma omp parallel for num_threads(NUMTHREADS)
+    // We shutdown the parrallel at present.
+    // #pragma omp parallel for num_threads(NUMTHREADS)
 	for (int i = 0; i < num; i++) {
 		Tree *tree = new Tree;
 		tree->setThreshold(a, b, c);
-        #pragma omp critical
-        {
+       // #pragma omp critical
+       // {
             cout << "Number of threads parallel running: " << omp_get_num_threads() << endl;
 	        startT = time(NULL);
 		    generateRandData(1);
 		    tree->setTrainData(trainDataRand);
 		    tree->setTestData(testDataRaw);
 		    tree->setFeatures(chooseFeatures());
-        }
+            /*
+            for (int j = 0; j < trainDataRand.size(); j++) {
+                for (int k = 0; k < labelNum; k++) {
+                    cout << trainDataRand[j].y[k] << ",";
+                }
+                cout << endl;
+            }*/
+       // }
 		tree->beginLearning();
-        #pragma omp critical
-        {
+       // #pragma omp critical
+       // {
 		    resultRaw.push_back(tree->getResult());
             // FOR DEBUG ONLY.
             tree->print();
 		    cout << "Tree " << i << " cost: " << time(0) - startT << "s" << endl;
-        }
+       // }
 		delete tree;
 	}
 }

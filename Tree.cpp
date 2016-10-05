@@ -147,11 +147,12 @@ double H(const vector<example> &E) {
     //Calculate the covariance matrix of S.
     arma::mat covS = arma::cov(S);
         // FOR DEBUG ONLY:
-    //cout << endl <<  covS << endl;
+    //cout << endl << "covS = " << covS << endl;
+    for (int i = 0; i < covS.n_rows; i++) covS(i, i) += 0.1;
     //Calculate the determinant of covS.
     double detCS = arma::det(covS);
         // FOR DEBUG ONLY:
-    //cout << "detcs = " << detCS << endl;
+    cout << "detcs = " << detCS << endl;
     // log() is the function 'ln()'
     // M_PI = 3.14159265358979323846
     double c = (labelNum / 2) * (1 + log(2 * M_PI));
@@ -177,6 +178,8 @@ inline double infoGain(const vector<example> &E, const vector<example> &upSet, c
         return INF - downSet.size() * H(downSet);  
     if (H(downSet) == -1 * numeric_limits<double>::infinity())
         return INF - upSet.size() * H(upSet);  
+    cout << "size of UPset: " << upSet.size() << "size of DownSet: " << downSet.size() << endl;
+    cout << "H(E) of UpSet: " << H(upSet) << "  H(E) of DownSet: " << H(downSet) << endl;
     return H(E) - ((upSet.size() / E.size()) * H(upSet) + (downSet.size() / E.size() * H(downSet)));
 }
 // By Tony. Sep 20.
@@ -190,10 +193,13 @@ feature chooseBestFeature(const vector<feature> &feats, vector<example> &E, vect
 			if (E[j].x[i] > max) max = E[j].x[i];
 			if (E[j].x[i] < min) min = E[j].x[i];
 		}
+        cout << " i = " << i << "max = " << max << "min = " << min << endl;
+        if (0.01 > max - min || 0.01 > min - max) continue;
         // Try a number of split points.
 		double split[splitPointsNum], step = (max - min) / (splitPointsNum + 1);
 		for (int j = 0; j < splitPointsNum; j++) split[j] = min + step * (j + 1); 
 		for (int j = 0; j < splitPointsNum; j++) {
+            //cout << "split[j] = " << split[j] << ", ";
 			upSet.clear();
 			downSet.clear();
 			for (int k = 0; k < E.size(); k++) {
@@ -205,6 +211,8 @@ feature chooseBestFeature(const vector<feature> &feats, vector<example> &E, vect
 				}
 			}
 			double nu = infoGain(E, upSet, downSet);
+            // For debug only.
+            cout << "nu = " << nu << endl;
             // Get the best feature index. and the split point value. 
 			if (maxInfoGain < nu) {
 				maxInfoGain = nu;

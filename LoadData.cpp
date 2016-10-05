@@ -28,12 +28,10 @@ LoadData::LoadData(string fileName, string dataSet) {
 		int j = 0, pos = 0;
 		fin.getline(buffer, maxLenOneLine);
 		sscanf(buffer, " %f", &t);
-		while (buffer[pos++] != ',') {}
 		for (j = 0; j < (dataSet == "test" ? feaNum : feaNum + labelNum); j++) {
+			while (pos < maxLenOneLine && buffer[pos++] != ',') {}
 			sscanf(buffer + pos, " %f", &E.terms[j]);
-			while (buffer[pos++] != ',') {}
 		}
-		sscanf(buffer + pos, " %f", &E.terms[j]);
 		rawData.push_back(E);
 	}
 	fin.close();
