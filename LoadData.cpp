@@ -61,7 +61,6 @@ void LoadData::convertRawDataToExamples() {
             if(y_u<cropingWidth&&x_v>=0)
             {
                 t.x[j]= rawData[i].terms[x*cropingWidth+y_u]-rawData[i].terms[x_v*cropingWidth+y];
-                cout<<t.x[j]<<endl;
             }
             //out of bound , during training we don't use this feature if any picture is out of bound case.
             else

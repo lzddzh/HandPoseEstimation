@@ -33,7 +33,7 @@ ExampleInput/  *Stores some small examples of input data file.
 * g++  * The C++ compiler, or you can use anything equvalent.
 * Armadillo-7.400.2   * A linear algebra C++ open library.
 
-**How to installi the prerequests?**
+**How to install the prerequests?**
 First download the `armdillo-7.400.2.zip` from [this link](http://pan.baidu.com/s/1o7Um4Sa), then uppack it. 
 Alternatively, you could also refers to [official website of Armdillo](http://arma.sourceforge.net/)
 
@@ -87,7 +87,7 @@ for now, just choose `debug mode`.
 This program does not input from the raw files like .shand, .skdepth or skdepth.cropping.
 Instead this program takes a single '.csv' file as its input, which stores all the training examples.
 
-An example input .csv file is at `HandPoseEstimation/ExampleInput/`
+The training Data in .csv format can be downloaded at: [this link](https://pan.baidu.com/s/1dFNui1j)
 where `value0, value1, ...` is the pixel value of our depth image, so there should be `90*60` values,and the `label0, label1, ...` is the hand joints postion value, so there should be `20*3` labels.
 
 In both `debug` and `real-time` mode of this program at running time, the program will output two files
