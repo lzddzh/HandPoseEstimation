@@ -42,11 +42,11 @@ We design our program by three parts: preprocess, model training, prediction. Ea
 Our system adopts hand patch instead of individual pixel as one training examples. The original depth image in dataset contains background and other objects which are irrelevant to our hand pose estimation tasks, such as brackets of the data-glove device. Therefore, we need to obtain a hand-centered bounding box after preprocessing the image.
 We first remove the background and noisy points by discarding the pixels of which depth value is greater than a certain threshold. Which means if a pixel¡¯s depth is greater than the threshold, we directly set it¡¯s value to be 32001 which is the maximum depth value.
 Then we fixed the bounding box¡¯s size to be $90\times 60$ and slide the windows through whole images to obtain the bounding box which contains the most ¡°non-background¡± pixels. Here are some examples of image cropping.
-\subsection{Model training}
+\subsection{Model Training}
 We need to train a lot of decision trees for random forest and each tree has the same training process, so we only describe the procedure of training a decision tree.
-\subsubsection{Depth features}
+\subsubsection{Depth Features}
 After preprocessing, each hand pose can be represented by following form: $E(X,Y)$ , where X is a $90\times 60$ dimension vector and Y is a $20\times 3$ dimension vector. Each dimension in X is calculated by¡­ . L is the 20 joint¡¯s 3D position. So our goal is building a model based on the training examples and predicting the test example¡¯s Y according to the corresponding X.
-\subsubsection{Split criteria}
+\subsubsection{Split Criteria}
 At each split node, we randomly choose a feature subset. For each feature, trying different split value to calculate information gain. Finally, we choose the best feature and split value which result in largest information gain to split this node into two children nodes. We only consider quantiles as our split value for the sake of efficiency. As for Entropy which is used to calculate information gain of a node, we use the entropy of multivariate Gaussian distribution like [1]. When calculating the Gaussian distribution, we add small random numbers to the diagonal of matrix  to make sure it is invertible, which means the determinant of the matrix can never equal to 0.
 \subsection{Prediction}
 Prediction of random forest is simply obtained by averaging the prediction from trees. So we only introduce how to obtain prediction from a decision tree here. Assume we represent an example as e(X,Y) .X is the feature vector and Y is the label vector. we let test example reach down to a certain leaf node L according to corresponding split features and split values which are selected during the model training phase. In current baseline model, we directly average all the training examples¡¯ label vector in the leaf node L to generate prediction. But we have implemented the image similarity function which is based on the pixel gradient information. Later on, we can use this kind of similarity as vote weight for each training example in order to improve prediction accuracy.
@@ -64,7 +64,7 @@ In the .csv file, each line is the depth values of each pixels of a image divide
 That is to say, each line of a .csv file is an example of training data or test data.
 
 All these scripts are under the folder of $/scripts$.
-\subsection{Main code}
+\subsection{Main Code}
 Recall that in the previous section we stored the depth images into lines in a $.csv$ file. In each line, there are $90*60$ features and additional $20*3$ labels if the data is training data. Our main code task is to take such files as input, train the many tress in the random forest and using the trained tress to make predictions. 
 
 We implemented our program in two modes, namely, debug and real time mode. In debug mode, we aim to adjust our code and parameters in the tree to get better prediction results. So we split the training data into two sub-datasets, $70\%$ for training and $30\%$ for predicting. Since the training data are all with labels, we can know the correct rate of our $30\%$ prediction. While in real time mode, we used the whole training data to train the random forest model and use the test data to get our prediction result. 
@@ -72,10 +72,10 @@ We implemented our program in two modes, namely, debug and real time mode. In de
 Written in C++, our code is naturally separated into below classes:
 
 \begin{itemize}
-\item Class $LoadData$:
-\item Class $Node$: 
-\item Class $Tree$: 
-\item Class $RandomForest$:
+\item Class $LoadData$
+\item Class $Node$
+\item Class $Tree$
+\item Class $RandomForest$
 \end{itemize}
 
 Class $LoadData$ load training data or test from $.csv$ file into main memory and convert the raw depth value into features by the formula 7 in [1] section 3.2. This class also deal with the split operation of training data.
@@ -91,8 +91,8 @@ Besides the classes above, we have a main.cpp where we use the classes to load d
 Our core algorithm involving let the tree grow and choose the best split feature at a node is in the class $Tree$. In this class, a number of important functions are implemented:
 
 \begin{itemize}
-\item Function $learning(examples, feautres, depth)$:
-\item Function $chooseBestFeature(features, examples)$:
+\item Function $learning(examples, feautres, depth)$
+\item Function $chooseBestFeature(features, examples)$
 \item Function $infoGain(examples, upSetExamples, downSetExamples)$
 \item Function $printTree(Node, depth)$
 \end{itemize} 
