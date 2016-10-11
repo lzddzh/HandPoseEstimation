@@ -56,7 +56,7 @@ After preprocessing, each hand pose can be represented by following form: $E(X,Y
 $$
 \phi(x)=d_{I}(x+\frac{u}{d_{I}(x)})-d_{I}(x+\frac{v}{d_{I}(x)}) \qquad(1)
 $$
-L is the 20 joint¡¯s 3D position. So our goal is building a model based on the training examples and predicting the test example¡¯s Y according to the corresponding X.
+Y is the 20 joint¡¯s 3D position. So our goal is building a model based on the training examples and predicting the test example¡¯s Y according to the corresponding X.
 \subsubsection{Split Criteria}
 At each split node, we randomly choose a feature subset. For each feature, trying different split value to calculate information gain. Finally, we choose the best feature and split value which result in largest information gain to split this node into two children nodes. We only consider quantiles as our split value for the sake of efficiency. As for Entropy which is used to calculate information gain of a node, we use the entropy of multivariate Gaussian distribution (1);
 $$
