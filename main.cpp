@@ -20,11 +20,11 @@ int main() {
     // Maximum treeDepth,
     // Maximum information gain in a node.
     // **********Threshold infoGain not used at present!!!!!!
-    float minExampleSetSize = 2, treeDepth = 5, infoGain = 0;
+    float minExampleSetSize = 5, treeDepth = 100, infoGain = 0;
     // Just for shorter variable names.
 	float &a = minExampleSetSize , &b = treeDepth, &c = infoGain;
     // Number of trees in the forest. For convenience of debugging, just 3 here.
-	int treeNum = 2;
+	int treeNum = 10;
     // Ask user which mode to use.
     // If answer 'r', we will enter real run-time mode, program will 
     //     train on training data set and test on test data set.
@@ -40,6 +40,14 @@ int main() {
 	RandomForest rf;
     // Record the start time.
 	time_t startT = time(NULL);
+    if (input == "t" || input == "T") {
+        LoadData trainData("trainData_1.csv", "train");
+        trainData.convertRawDataToExamples();
+        vector<example> t1 = trainData.getData();
+        Tree a;
+        //cout << "H = " << a.H(t1) << endl;
+        return 0;
+    }
 	if (input == "d" || input == "D") {
 		cout << "\nBegin debug mode..." << endl;
         // Load data from training data set and split it to two parts.
@@ -49,6 +57,7 @@ int main() {
 	    trainData.splitData(0.7);
         vector<example> t1 = trainData.getTrainData();
         vector<example> t2 = trainData.getTestData();
+        cout << "t1 size " << t1.size() << endl;
         // FOR DEGBU only:
         /*for (int i = 0; i < t1.size(); i++) {
             for (int j = 0; j < feaNum; j++) cout << t1[i].x[j] << ",";
@@ -66,8 +75,8 @@ int main() {
 		cout << "\nBegin real run-time mode..." << endl;
         // Load training data from training data set, Load test data from 
         //     test data set.
-	    LoadData trainData("train.csv", "train");
-		LoadData testData("test.csv", "test");
+	    LoadData trainData("trainData.csv", "train");
+		LoadData testData("testData.csv", "test");
         trainData.convertRawDataToExamples();
         testData.convertRawDataToExamples();
         vector<example> t1 = trainData.getData();

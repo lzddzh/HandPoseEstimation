@@ -5,6 +5,7 @@
 // values and the 20*3 joints 3D position.
 
 #include "LoadData.h"
+#include <string>
 
 // Maximum buffer length of reading one line from file.
 #define maxLenOneLine 100000
@@ -27,11 +28,16 @@ LoadData::LoadData(string fileName, string dataSet) {
 	for (int i = 0; i < (dataSet == "test" ? testExampleNum : trainExampleNum); i++) {
 		int j = 0, pos = 0;
 		fin.getline(buffer, maxLenOneLine);
-		sscanf(buffer, " %f", &t);
-		for (j = 0; j < (dataSet == "test" ? feaNum : feaNum + labelNum); j++) {
-			while (pos < maxLenOneLine && buffer[pos++] != ',') {}
-			sscanf(buffer + pos, " %f", &E.terms[j]);
-		}
+        char* p = strtok(buffer,",");
+        p=strtok(NULL,",");
+        E.name = string(p);
+        int position = 0; 
+        while(p)
+        { 
+            p=strtok(NULL, ",");              
+            if (!p) break;
+            sscanf(p, " %f",  &E.terms[position++]);
+        }
 		rawData.push_back(E);
 	}
 	fin.close();
@@ -47,6 +53,7 @@ void LoadData::convertRawDataToExamples() {
 
     for (int i = 0; i < rawData.size(); i++) {
         example t;
+        t.name = rawData[i].name;
         for (int j = 0; j < feaNum; j++) {
             //current pixel depth
             float depth=rawData[i].terms[j];

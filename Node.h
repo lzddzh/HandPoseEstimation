@@ -21,6 +21,8 @@ public:
         Constructor for leave nodes. 
     */
 	Node(example averageLabelValue, int d);
+
+    Node(vector<example> examples, int d);
     /*
         Add a new branch to this node, and the split poiont value also needed.
         We at most add two branch to the node.
@@ -46,6 +48,7 @@ public:
     */
 	~Node();
 private:
+    vector<example> estimateExamples;
 	feature chosenFeature; // leaves don't have this value.
 	example label; // only leaves have this value.
 	vector<Node*> subNodes; // only two sub Nodes here. 

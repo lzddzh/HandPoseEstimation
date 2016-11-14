@@ -6,6 +6,7 @@
 #include<cstdio>
 #include<cstring>
 #include<string>
+#include<string>
 #include<vector>
 #include<cmath>
 #include<cstdlib>
@@ -23,9 +24,9 @@
 // Define the parameters of the input data.
 #define feaNum 90*60 // The number of feature in each example.
 #define labelNum 20*3 // 20 3D positions of the joints.
-#define trainExampleNum 10 // For conveinience of dubugging, we first use only 10 examples.
-#define testExampleNum 3
-#define splitPointsNum 4 // number of split points in each try of feautures.
+#define trainExampleNum 435 // For conveinience of dubugging, we first use only 10 examples.
+#define testExampleNum 435
+#define splitPointsNum 10 // number of split points in each try of feautures.
 
 #define cropingHeigh 90
 #define cropingWidth 60
@@ -39,11 +40,13 @@ using namespace std;
 // Where n is the number of feature, m is the number of labels.
 // In our case, n = 90 * 60, m = 20 * 3
 struct rawDataEachLine {
+    string name;
     float terms[feaNum + labelNum];
 }; 
 // The input of forest at training time is 'vector<example>'. 
 // TODO: edit 'example' as armadillo type.
 struct example { 
+    string name;
     float x[feaNum];
     float y[labelNum];
 };

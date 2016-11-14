@@ -6,3 +6,8 @@ pyscript/
 run.out
 output*.txt
 run.sh
+CMakeCache.txt
+CMakeFiles/
+HandPoseEstimation
+cmake_install.cmake
+makefile_backup

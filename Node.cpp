@@ -16,6 +16,12 @@ Node::Node(example averageLabelValue, int d) {
 	this->depth = d;
 	this->subNodes.clear();
 }
+
+Node::Node(vector<example> examples, int d) {
+    this->estimateExamples = examples;
+    this->depth = d;
+    this->subNodes.clear();
+}
 /* By Tony, Sep 20.
     Add a new branch to this node, and the split poiont value also needed.
     We at most add two branch to the node.
@@ -42,7 +48,8 @@ example Node::makeDecision(example &e) {
 void Node::print() {
 	if (subNodes.empty()) {
         cout << "label=";
-        for (int i = 0; i < labelNum; i++) cout << label.y[i] << ",";
+        for (int i = 0; i < this->estimateExamples.size(); i++) 
+        	cout << estimateExamples[i].name << ", ";
         cout << endl;
     } else {
         cout << this->chosenFeature.index << endl;

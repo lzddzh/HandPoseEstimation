@@ -12,6 +12,7 @@
 
 class Tree {
 public:
+    //double H(const vector<example>&);
 	Tree();
 	void beginLearning();
 	void setThreshold(float exampleSize = 5, float depth = 2, float infoGain = 0.2);

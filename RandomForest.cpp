@@ -15,7 +15,7 @@ void RandomForest::run(float a, float b, float c, int num) {
 		tree->setThreshold(a, b, c);
        // #pragma omp critical
        // {
-            cout << "Number of threads parallel running: " << omp_get_num_threads() << endl;
+       //     cout << "Number of threads parallel running: " << omp_get_num_threads() << endl;
 	        startT = time(NULL);
 		    generateRandData(1);
 		    tree->setTrainData(trainDataRand);
@@ -29,6 +29,7 @@ void RandomForest::run(float a, float b, float c, int num) {
                 cout << endl;
             }*/
        // }
+        cout << "trianing on " << trainDataRand.size() << " examples." << endl;
 		tree->beginLearning();
        // #pragma omp critical
        // {
@@ -128,10 +129,11 @@ void RandomForest::outputResultRaw(string fileName) {
 void RandomForest::outputResult(string fileName) {
 	fstream out;
 	out.open((OUTPUTDIR + fileName).c_str(), ifstream::out);
-	out << "id,label" << endl;
+	//out << "id,label" << endl;
 	for (int i = 0; i < result.size(); i++) {
-        out << i ;
-        for (int j = 0; j < labelNum; j++)
+        //out << i ;
+        out << result[i].y[0];
+        for (int j = 1; j < labelNum; j++)
 		    out << "," << result[i].y[j];
         out << endl;
 	}
