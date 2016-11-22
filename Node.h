@@ -23,6 +23,7 @@ public:
 	Node(example averageLabelValue, int d);
 
     Node(vector<example> examples, int d);
+
     /*
         Add a new branch to this node, and the split poiont value also needed.
         We at most add two branch to the node.

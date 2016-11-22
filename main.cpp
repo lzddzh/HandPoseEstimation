@@ -20,11 +20,11 @@ int main() {
     // Maximum treeDepth,
     // Maximum information gain in a node.
     // **********Threshold infoGain not used at present!!!!!!
-    float minExampleSetSize = 5, treeDepth = 100, infoGain = 0;
+    float minExampleSetSize = 10, treeDepth = 100, infoGain = 0;
     // Just for shorter variable names.
 	float &a = minExampleSetSize , &b = treeDepth, &c = infoGain;
     // Number of trees in the forest. For convenience of debugging, just 3 here.
-	int treeNum = 10;
+	int treeNum = 100;
     // Ask user which mode to use.
     // If answer 'r', we will enter real run-time mode, program will 
     //     train on training data set and test on test data set.

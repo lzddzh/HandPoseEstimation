@@ -5,7 +5,7 @@
 */
 void printTree(Node *root, int depth);
 feature chooseBestFeature(const vector<feature> &feats, vector<example> &E,
-    vector<example> &upSet, vector<example> &downSet, float &sP); 
+    vector<example> &upSet, vector<example> &downSet, float &sP, bool useName); 
 double H(const vector<example> &E);
 inline double infoGain(const vector<example> &E, const vector<example> &upSet,
     const vector<example> &downSet); 
@@ -42,6 +42,8 @@ void Tree::setTestData(const vector<example> &a) {
 void Tree::setFeatures(const vector<feature> &a) {
 	features = a;
 }
+int Tree::getTrainDataSize() {return this->trainData.size();}
+
 // By Tony, Sep 20. Begin split the tree from the root node.
 void Tree::beginLearning() {
 	if (trainData.size() == 0) cout << "Tree's trainData size is empty." << endl;
@@ -55,6 +57,7 @@ vector<example> Tree::getResult() {
 		cout << "Tree's test data is empty. Can not get result." << endl;
 	}
 	for (int i = 0; i < testData.size(); i++) {
+        if (root == NULL) cout << "root = NULL" << endl;
 		result.push_back(root->makeDecision(testData[i]));
 	}
 	return result;
@@ -68,13 +71,14 @@ void Tree::print() {
 Node* Tree::learning(vector<example> &E, const vector<feature> &feats, int depth) {
 	int n;
 	if (E.size() <= exampleSizeThreshold || depth > depthThreshold || H(E) == -1 * numeric_limits<double>::infinity()) {
-        Node *leaf = new Node(averageLabelValueOfExamples(E), depth); return leaf;
+        Node *leaf = new Node(E, depth); return leaf;
     }
 	else {
 		float splitPoint;
 		vector<example> upSet, downSet;
 	    vector<feature> feats = randomChooseFeatures();
-		feature best = chooseBestFeature(feats, E, upSet, downSet, splitPoint);
+		feature best = chooseBestFeature(feats, E, upSet, downSet, splitPoint, E.size()>10?true:false);
+		//feature best = chooseBestFeature(feats, E, upSet, downSet, splitPoint, false);
 		Node *newTree = new Node(best, depth);
 		Node *newLeftTree = learning(upSet, feats, depth + 1);
 		newTree->addNewBranch(newLeftTree, splitPoint);
@@ -116,8 +120,9 @@ example averageLabelValueOfExamples(const vector<example> &E) {
 }
 // By Tony, Sep 20.
 vector<feature> randomChooseFeatures() {
-	int num = int(sqrt(feaNum));
+	//int num = int(sqrt(feaNum));
 	//int num = feaNum;
+	int num = 200;
 	vector<feature> feats;
     for (int i = 0; i < feaNum; i++) {
         feats.push_back({i});
@@ -216,7 +221,9 @@ double infoGain2(const vector<example> &E, const vector<example> &upSet, const v
 }
 
 // By Tony. Sep 20.
-feature chooseBestFeature(const vector<feature> &feats, vector<example> &E, vector<example> &upSet, vector<example> &downSet, float &sP) {
+// useName == true:  calculate infoGain by name.
+// useNme == false: calculate infoGain by points.
+feature chooseBestFeature(const vector<feature> &feats, vector<example> &E, vector<example> &upSet, vector<example> &downSet, float &sP, bool useName) {
     using namespace std::chrono;
     // Set maxInfoGain to -inf.
 	double maxInfoGain = -1 * numeric_limits<double>::infinity();
@@ -246,7 +253,7 @@ feature chooseBestFeature(const vector<feature> &feats, vector<example> &E, vect
 				}
 			}
             //auto start1 = high_resolution_clock::now();
-			double nu = infoGain(E, upSet, downSet);
+            double nu = useName ? infoGain2(E, upSet, downSet) : infoGain(E, upSet, downSet);
             //cout <<  "feat id " <<  feats[i].index << " H = (" << H(upSet) << ", " << H(downSet) << ") Upsize = " << upSet.size() << " Downsize = " << downSet.size() << endl;
             //auto end1 = high_resolution_clock::now();
             //float elapsedSeconds1 = duration_cast<duration<float>>(end1-start1).count();
@@ -273,7 +280,7 @@ feature chooseBestFeature(const vector<feature> &feats, vector<example> &E, vect
         cout << "Exit program.." << endl;
         exit(0);
     }
-    cout << "bestFeature = " << bestFeature << endl;
+    // cout << "bestFeature = " << bestFeature << endl;
 	for (int k = 0; k < E.size(); k++) {
 		if (E[k].x[bestFeature] <= sP) {
 			upSet.push_back(E[k]);

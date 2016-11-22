@@ -18,18 +18,18 @@
 #define NUMTHREADS 4
 
 // Define the file read and write directory.
-#define INPUTDIR "InputData/" // You can change this value to 'InputData/'
-#define OUTPUTDIR "OutputData/"
+#define INPUTDIR "/home/jayd/Desktop/NUS/UncertaintyModel/project/HandPoseEstimation/InputData/" // You can change this value to 'InputData/'
+#define OUTPUTDIR "/home/jayd/Desktop/NUS/UncertaintyModel/project/HandPoseEstimation/OutputData/"
 
 // Define the parameters of the input data.
-#define feaNum 90*60 // The number of feature in each example.
+#define feaNum 15*10//30*20 //90*60 // The number of feature in each example.
 #define labelNum 20*3 // 20 3D positions of the joints.
-#define trainExampleNum 435 // For conveinience of dubugging, we first use only 10 examples.
+#define trainExampleNum 430 // For conveinience of dubugging, we first use only 10 examples.
 #define testExampleNum 435
 #define splitPointsNum 10 // number of split points in each try of feautures.
 
-#define cropingHeigh 90
-#define cropingWidth 60
+#define cropingHeigh 15
+#define cropingWidth 10
 
 #define INF 2e9
 

@@ -21,6 +21,8 @@ public:
 	void setFeatures(const vector<feature> &a);
 	vector<example> getResult();
 	void print();
+    int getTrainDataSize();
+    vector<example> getTrainData() {return trainData;}
 	~Tree();
 private:
 	Node* learning(vector<example> &E, const vector<feature> &feature, int depth);

@@ -5,10 +5,12 @@ This program has a Random Forest containing number of Trees who can be trained
 by training data and make prediction on test data. The Random Forest will then 
 collect the results of all the trees and make the final prediction.
 
-This program will be a implementation of paper: 
+This program is a implementation of paper: 
      Chi Xu, Ashwin Nanjappa, Xiaowei Zhang, Li Cheng. [Estimate Hand Poses Efficientlyfrom Single Depth Images](http://web.bii.a-star.edu.sg/~xuchi/dhand.htm). In In International Journal of Computer Vision (IJCV), 2015. 
 
-Now we are at the first iteration of the implementation, where we will just finish the 'Baseline-M'
+We have implemented the 'baseline-M' version and the 'dynamical weight at leaf nodes' version.
+
+The baseline-M is a normal random forest that can be change and adapt for other general problem sovling.
 
 ### Platform
 * Ubuntu14.04 or other common Linux version.
@@ -19,7 +21,8 @@ Now we are at the first iteration of the implementation, where we will just fini
 
 ```console
 .    
-makefile    *For compile time use, sepcifing the compile rules.
+CMakeList.txt  *For Cmake
+Makefile    *For compile time use, sepcifing the compile rules.
 README.md   *This file.
 common.h
 ...         *The source files and the makefile.
@@ -36,6 +39,7 @@ ExampleInput/  *Stores some small examples of input data file.
 **How to install the prerequests?**
 First download the `armdillo-7.400.2.zip` from [this link](http://pan.baidu.com/s/1o7Um4Sa), then uppack it. 
 Alternatively, you could also refers to [official website of Armdillo](http://arma.sourceforge.net/)
+install openCV at [openCV official user guide](http://docs.opencv.org/2.4.13/doc/user_guide/user_guide.html)
 
 ```console 
 $ sudo apt-get update
@@ -58,6 +62,7 @@ Armadillo can also be installed on Windows if you like.
 ### Compile
 ```console
 $ cd /YourDirectory/HandPoseEstimation/
+$ cmake .
 $ make
 ```
 After the make, you should see some files like `.o`, `.gch` and excutable `run.out`.
@@ -65,17 +70,19 @@ If failed during in make, please check you if your prerequests are successfully 
 
 ### Run
 ```console
-$ ./run.out
+$ ./HandPoseEstimation
+$ d
 ```
+for debug mode. (without test on test data)
 
 or
 
 ```console
-$ ./run.out > output.txt
-$ d
+$ ./HandPoseEstimation
+$ r 
 ```
+for real time mode. (with output of test data result)
 
-The second one will print to file instead of printing to console.
 
 When you are running the program, it will ask you which mode to choose,
 for now, just choose `debug mode`.

@@ -6,39 +6,42 @@ RandomForest::RandomForest(){}
 void RandomForest::run(float a, float b, float c, int num) {
 	resultRaw.clear();
     int startT;
-    // Now it use only 1 thread whatever you set. 
+    // Now it use only 1 thread whatever you set.
     // Later when the data becomes big, we debug this.
     // We shutdown the parrallel at present.
-    // #pragma omp parallel for num_threads(NUMTHREADS)
-	for (int i = 0; i < num; i++) {
-		Tree *tree = new Tree;
-		tree->setThreshold(a, b, c);
-       // #pragma omp critical
-       // {
-       //     cout << "Number of threads parallel running: " << omp_get_num_threads() << endl;
+    int i;
+    #pragma omp parallel for num_threads(NUMTHREADS)
+    //#pragma omp parallel for num_threads(1)
+	for (i = 0; i < num; i++) {
+		Tree tree;
+		    tree.setThreshold(a, b, c);
+            cout << "Number of threads parallel running: " << omp_get_num_threads() << endl;
 	        startT = time(NULL);
-		    generateRandData(1);
-		    tree->setTrainData(trainDataRand);
-		    tree->setTestData(testDataRaw);
-		    tree->setFeatures(chooseFeatures());
+        #pragma omp critical
+        {
+		    tree.setTrainData(generateRandData(0.6));
+		    tree.setTestData(testDataRaw);
+			cout << "test data size:" << testDataRaw.size() << endl;
+		    tree.setFeatures(chooseFeatures());
             /*
-            for (int j = 0; j < trainDataRand.size(); j++) {
+            for (int j = 0; j < tree.getTrainData().size(); j++) {
                 for (int k = 0; k < labelNum; k++) {
-                    cout << trainDataRand[j].y[k] << ",";
+                    cout << tree.getTrainData()[j].y[k] << ",";
                 }
                 cout << endl;
             }*/
-       // }
-        cout << "trianing on " << trainDataRand.size() << " examples." << endl;
-		tree->beginLearning();
-       // #pragma omp critical
-       // {
-		    resultRaw.push_back(tree->getResult());
-            // FOR DEBUG ONLY.
-            tree->print();
+            cout << "trianing on " << tree.getTrainDataSize() << " examples." << endl;
+        }
+		tree.beginLearning();
+        #pragma omp critical
+        {
+			// FOR DEBUG ONLY.
+            tree.print();
+            tree.getResult();
+		    resultRaw.push_back(tree.getResult());
+
 		    cout << "Tree " << i << " cost: " << time(0) - startT << "s" << endl;
-       // }
-		delete tree;
+        }
 	}
 }
 
@@ -80,9 +83,9 @@ void RandomForest::vote() {
 }
 
 // By Tony. Sep 20.
-void RandomForest::generateRandData(float rate) {
+vector<example> RandomForest::generateRandData(float rate) {
     // Must clear it first, because multiple threads are using it.
-	trainDataRand.clear();
+/*
     bool used[trainDataRaw.size()];
     memset(used, 0, sizeof(used));
 	int size = (int)trainDataRaw.size() * rate;
@@ -93,6 +96,13 @@ void RandomForest::generateRandData(float rate) {
 		trainDataRand.push_back(trainDataRaw[n]);
         used[n] = true;
 	}
+*/
+    vector<example> trainDataRand;
+    trainDataRand = trainDataRaw;
+    random_shuffle(trainDataRand.begin(), trainDataRand.end());
+    trainDataRand.resize(rate * trainDataRaw.size());
+    
+    return trainDataRand;
 }
 
 // TODO: not implemented.

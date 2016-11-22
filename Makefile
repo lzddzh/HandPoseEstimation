@@ -111,6 +111,54 @@ HandPoseEstimation/fast:
 	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/build
 .PHONY : HandPoseEstimation/fast
 
+Block.o: Block.cpp.o
+.PHONY : Block.o
+
+# target to build an object file
+Block.cpp.o:
+	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/Block.cpp.o
+.PHONY : Block.cpp.o
+
+Block.i: Block.cpp.i
+.PHONY : Block.i
+
+# target to preprocess a source file
+Block.cpp.i:
+	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/Block.cpp.i
+.PHONY : Block.cpp.i
+
+Block.s: Block.cpp.s
+.PHONY : Block.s
+
+# target to generate assembly for a file
+Block.cpp.s:
+	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/Block.cpp.s
+.PHONY : Block.cpp.s
+
+CalSim.o: CalSim.cpp.o
+.PHONY : CalSim.o
+
+# target to build an object file
+CalSim.cpp.o:
+	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/CalSim.cpp.o
+.PHONY : CalSim.cpp.o
+
+CalSim.i: CalSim.cpp.i
+.PHONY : CalSim.i
+
+# target to preprocess a source file
+CalSim.cpp.i:
+	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/CalSim.cpp.i
+.PHONY : CalSim.cpp.i
+
+CalSim.s: CalSim.cpp.s
+.PHONY : CalSim.s
+
+# target to generate assembly for a file
+CalSim.cpp.s:
+	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/CalSim.cpp.s
+.PHONY : CalSim.cpp.s
+
 LoadData.o: LoadData.cpp.o
 .PHONY : LoadData.o
 
@@ -207,30 +255,6 @@ Tree.cpp.s:
 	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/Tree.cpp.s
 .PHONY : Tree.cpp.s
 
-calSim.o: calSim.cpp.o
-.PHONY : calSim.o
-
-# target to build an object file
-calSim.cpp.o:
-	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/calSim.cpp.o
-.PHONY : calSim.cpp.o
-
-calSim.i: calSim.cpp.i
-.PHONY : calSim.i
-
-# target to preprocess a source file
-calSim.cpp.i:
-	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/calSim.cpp.i
-.PHONY : calSim.cpp.i
-
-calSim.s: calSim.cpp.s
-.PHONY : calSim.s
-
-# target to generate assembly for a file
-calSim.cpp.s:
-	$(MAKE) -f CMakeFiles/HandPoseEstimation.dir/build.make CMakeFiles/HandPoseEstimation.dir/calSim.cpp.s
-.PHONY : calSim.cpp.s
-
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -264,6 +288,12 @@ help:
 	@echo "... HandPoseEstimation"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... Block.o"
+	@echo "... Block.i"
+	@echo "... Block.s"
+	@echo "... CalSim.o"
+	@echo "... CalSim.i"
+	@echo "... CalSim.s"
 	@echo "... LoadData.o"
 	@echo "... LoadData.i"
 	@echo "... LoadData.s"
@@ -276,9 +306,6 @@ help:
 	@echo "... Tree.o"
 	@echo "... Tree.i"
 	@echo "... Tree.s"
-	@echo "... calSim.o"
-	@echo "... calSim.i"
-	@echo "... calSim.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

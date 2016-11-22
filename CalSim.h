@@ -1,39 +1,13 @@
-#include <opencv2/opencv.hpp>
+#include "common.h"
+//#include "Block.h"
+//#include <opencv2/opencv.hpp>
 #define PI 3.14159265
 
-class Block
+class CalSim 
 {
-public :
-    int count[9];
-    Block()
-    {
-        for(int i=0;i<9;i++)
-        {
-            count[i]=0;
-        }
-    }
-
-    int find_block_direction()
-    {
-        int result=0;
-        int max_count=count[0];
-        for(int i=1;i<9;i++)
-        {
-            if(count[i]>max_count)
-            {
-                result=i;
-                max_count=count[i];
-            }
-        }
-        return result;
-    }
-};
-
-class Cal_Sim
-{
-
 public:
-    static int cal_angle(float x,float y)
+    CalSim() {}
+    int cal_angle(float x,float y)
     {
         if(x<1&&x>0||x<0&&x>-1)
         {
@@ -90,7 +64,7 @@ public:
         return int(angle/45);
     }
 
-    static float cal_sim(float a[], float b[]) {
+    float cal_sim(float a[], float b[]) {
         using namespace cv;
         int scale = 1;
         int delta = 0;

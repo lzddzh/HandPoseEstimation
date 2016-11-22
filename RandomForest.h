@@ -28,7 +28,7 @@ public:
     // TODO: implemente this function correctly.
 	void vote();
 
-	void generateRandData(float rate); 
+	vector<example> generateRandData(float rate); 
 
     // TODO: not implemented.
 	float CorrectRate(); 
@@ -47,7 +47,7 @@ private:
 	vector<example> trainDataRaw, testDataRaw;
 
     // Randomly choose a part of eaxmples for each tree.
-	vector<example> trainDataRand;
+	// vector<example> trainDataRand;
     
     // Store all the trees prediction results.
     // In the first vector each line is a Tree's result.
