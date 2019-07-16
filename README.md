@@ -5,7 +5,7 @@ This program has a Random Forest containing number of Trees who can be trained
 by training data and make prediction on test data. The Random Forest will then 
 collect the results of all the trees and make the final prediction.
 
-This program is a implementation of paper: 
+This program is an implementation of paper: 
      Chi Xu, Ashwin Nanjappa, Xiaowei Zhang, Li Cheng. [Estimate Hand Poses Efficientlyfrom Single Depth Images](http://web.bii.a-star.edu.sg/~xuchi/dhand.htm). In In International Journal of Computer Vision (IJCV), 2015. 
 
 We have implemented the 'baseline-M' version and the 'dynamical weight at leaf nodes' version.
