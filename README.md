@@ -10,7 +10,7 @@ This program is an implementation of paper:
 
 We have implemented the 'baseline-M' version and the 'dynamical weight at leaf nodes' version.
 
-The baseline-M is a normal random forest that can be change and adapt for other general problem sovling.
+The baseline-M is a normal random forest that can be changed and adapted for other general problem sovling.
 
 ### Platform
 * Ubuntu14.04 or other common Linux version.
